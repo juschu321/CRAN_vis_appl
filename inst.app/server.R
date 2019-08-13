@@ -3,9 +3,6 @@ library(shinydashboard)
 library(ggplot2)
 library(plotly)
 library(dplyr)
-library(r2d3)
-
-
 
 server <- function(input, output, session) {
 

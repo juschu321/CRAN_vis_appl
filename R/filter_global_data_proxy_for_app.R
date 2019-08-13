@@ -1,6 +1,7 @@
-#' filter_global_data
+#' filter_global_data 
 #' 
 #' used as basis for the filter options in the application
+#' just works in the application with the input from the filter
 #' @param selected_from date 
 #' @param selected_to date
 #' @param selected_packages chr names of packages

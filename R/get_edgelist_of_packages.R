@@ -47,3 +47,5 @@ get_edgelist_of_packages <- function (api_data_of_packages) {
   
   return(edgelist)
 }
+
+edgelist <- get_edgelist_of_packages(api_data)
