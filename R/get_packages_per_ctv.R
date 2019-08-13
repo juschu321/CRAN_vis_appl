@@ -24,3 +24,11 @@ get_packages_per_ctv <- function () {
 }
 
 packages_per_ctv <- get_packages_per_ctv()
+
+ctvs <- packages_per_ctv %>%
+  distinct(ctv)
+
+packages <- packages_per_ctv %>%
+  distinct(package)
+
+

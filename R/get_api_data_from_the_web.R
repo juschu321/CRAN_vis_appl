@@ -1,6 +1,6 @@
 #' get_api_data_from_the_web
 #' 
-#' receive the api data for each 
+#' receive the api data for each package
 #' basis for dependency structure
 #' returns a list of the corresponding api data
 #' @param package chr 
@@ -15,5 +15,3 @@ r_api <- function(package) {
   parsed <-
     jsonlite::fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
 }
-
-

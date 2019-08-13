@@ -11,3 +11,5 @@ get_api_data <- function (packages) {
   }
   return(api_data)
 }
+
+api_data <- get_api_data(packages = packages_per_ctv$package)
