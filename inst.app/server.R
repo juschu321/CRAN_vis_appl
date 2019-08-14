@@ -25,9 +25,36 @@ server <- function(input, output, session) {
             date_breaks = "1 month",
             date_labels = "%Y - %m"
          )
-     
-   ggplotly (p2)
+      
+      ggplotly (p2)
    })
+   
+   
+   time_series_monthly_sub <- reactive({
+      selected_ctvs <- input$ctvs_select
+      selected_sub <- input$subcategory_select
+      selected_from <- input$year[1]
+      selected_to <- input$year[2]
+      
+      merged_data <- 
+         inner_join(tutti_time_monthly_package, packages_per_psy_sub, by = c("package" = "package")) %>%
+         filter (month >= selected_from, month <= selected_to, category == selected_sub) %>%
+         group_by(category, month) %>% 
+         summarise(total = sum(total))
+   })
+   
+   output$sub_plot <- renderPlotly({
+      data = time_series_monthly_sub()
+      sub_plot <- ggplot(data) +
+         geom_line(aes (month, total, color= data$category)) +
+         scale_x_date(
+            date_breaks = "1 month",
+            date_labels = "%Y - %m"
+         )
+      
+      ggplotly (sub_plot)
+   })
+   
    
    downloads_per_ctv <- reactive({
       selected_ctvs <- input$ctvs_select
@@ -48,9 +75,7 @@ server <- function(input, output, session) {
          summarise(count = n_distinct(package))
       
       merged_data <- inner_join(monthly_avg_per_ctv, count_pkg_per_ctv,  c("ctv" = "ctv")) %>%
-                        mutate(avg_pkg = avg / count)
-      
-      
+         mutate(avg_pkg = avg / count)
       
    })
    
@@ -76,7 +101,7 @@ server <- function(input, output, session) {
          filter (package == selected_pkgs) %>%
          filter (month >= selected_from, month <= selected_to)
    })
- 
+   
    output$pkg_plot <- renderPlot({
       data = time_series_monthly_pkg()
       ggplot(data) +
@@ -94,3 +119,4 @@ server <- function(input, output, session) {
    })
    
 }
+
