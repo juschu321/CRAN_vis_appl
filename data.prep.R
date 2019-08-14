@@ -1,6 +1,9 @@
 #data prep (to generate )
 packages_per_ctv <- get_packages_per_ctv()
 
+psy_packages <- get_psy_packages()
+psy_sub <- get_subcategory_of_psy_packages(psy_packages = psy_packages)
+
 #get global data
 global_edgelist <- data.frame()
 global_api <- list()
