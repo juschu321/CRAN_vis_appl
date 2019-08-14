@@ -5,7 +5,6 @@ library(plotly)
 library(dplyr)
 
 server <- function(input, output, session) {
-
    
    #### CTV LEVEL ####
    time_series_monthly_ctv <- reactive({
@@ -89,12 +88,6 @@ server <- function(input, output, session) {
          )
       
    })
-   
-   
-
-   
-   
-   
    
    output$value <- renderPrint({
       input$checkboxGroup

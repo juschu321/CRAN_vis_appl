@@ -17,5 +17,3 @@ get_download_statistics <- function(packages) {
   }
   return(download_statistics)
 }
-
-download_statistics <- get_download_statistics(packages = packages_per_ctv$package )

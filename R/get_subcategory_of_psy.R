@@ -37,5 +37,3 @@ get_subcategory_of_psy_packages <- function(psy_packages) {
   
   return (psy_package_categories)
 }
-
-psy_subcategories <- get_subcategory_of_psy_packages(psy_packages)

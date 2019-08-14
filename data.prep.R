@@ -1,10 +1,7 @@
-#' get_global_data
-#' 
-#' generate global data
-#' gather global data of all ctvs
-#' merge data
-#' @param 
-#' @export
+#data prep (to generate )
+packages_per_ctv <- get_packages_per_ctv()
+
+#get global data
 global_edgelist <- data.frame()
 global_api <- list()
 global_download <- data.frame ()
@@ -18,3 +15,5 @@ for (view in ctv::available.views()) {
   global_edgelist <- rbind(global_edgelist, edgelist)
   global_download <- rbind(global_download, download_statistics)
 }
+
+psy_subcategories <- get_subcategory_of_psy_packages(psy_packages)

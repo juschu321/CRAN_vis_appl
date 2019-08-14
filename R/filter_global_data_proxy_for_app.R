@@ -9,7 +9,7 @@
 #' @param selected_ctv chr 
 #' @param level chr
 #' @export
-filter_timeseries_data <-
+get_filter_timeseries_data <-
   function (selected_from = as.Date("2012-10-01"),
             selected_to = Sys.Date() - 1,
             selected_packages = list(),

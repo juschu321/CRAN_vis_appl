@@ -7,6 +7,6 @@
 #' @param global_download list of all downloads
 #' @param packages_per_ctv list of corresponding packages + ctv
 #' @export 
-tutti_timeseries <-
+get_tutti_timeseries <- function() {tutti_timeseries <-
   inner_join(global_download, packages_per_ctv, by = c("package" = "package"))%>%
-  filter(core == FALSE)
+  filter(core == FALSE)}

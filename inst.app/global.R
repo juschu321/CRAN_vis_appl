@@ -1,7 +1,10 @@
+#required parameters for the application (aggregation steps for the basis)
+
 library(readr)
 
 packages_per_ctv <- read_csv("data/packages_per_ctv.csv", 
                              col_types = cols(X1 = col_skip()))
+
 
 ctvs <- packages_per_ctv %>%
   distinct(ctv)

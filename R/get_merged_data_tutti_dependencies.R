@@ -6,6 +6,6 @@
 #' @param global_edgelist
 #' @param packages_per_ctv
 #' @export 
-tutti_dependencies <-
-  inner_join(global_edgelist, packages_per_ctv, by = c ("this" = "package"))
+get_tutti_dependencies <- function(){tutti_dependencies <-
+  inner_join(global_edgelist, packages_per_ctv, by = c ("this" = "package"))}
 
