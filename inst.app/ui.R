@@ -82,11 +82,13 @@ body <- dashboardBody(
             "time span",
             min = as.Date("2012-10-01"),
             max = Sys.Date(),
-            value = c(as.Date("2016-02-25"), Sys.Date()),
+            value = c(as.Date("2018-08-01"), Sys.Date()),
             timeFormat = "%F"
           )
           
-        ),
+        )
+        
+        ,
         box(
           title = "average number of packages per ctv",
           width = 6,
@@ -177,7 +179,7 @@ body <- dashboardBody(
             "time span",
             min = as.Date("2012-10-01"),
             max = Sys.Date(),
-            value = c(as.Date("2016-02-25"), Sys.Date()),
+            value = c(as.Date("2018-08-01"), Sys.Date()),
             timeFormat = "%F"
           )
           
