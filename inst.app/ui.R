@@ -86,9 +86,7 @@ body <- dashboardBody(
             timeFormat = "%F"
           )
           
-        )
-        
-        ,
+        ),
         box(
           title = "average number of packages per ctv",
           width = 6,
