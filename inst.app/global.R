@@ -1,5 +1,19 @@
 #required parameters for the application (aggregation steps for the basis)
 
+library(cranlogs)
+library(ctv)
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(cranly)
+library(tidyverse)
+library(httr)
+library(jsonlite)
+library(rvest)
+library(magrittr)
+library(xml2)
+library(lubridate)
+library(plotly)
 library(readr)
 
 packages_per_ctv <- read_csv("data/packages_per_ctv.csv", 

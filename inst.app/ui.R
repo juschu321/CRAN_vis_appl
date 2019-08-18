@@ -36,7 +36,7 @@ body <- dashboardBody(
           )
         )
       ),
-      
+    
       
       
       fluidRow(
@@ -86,6 +86,13 @@ body <- dashboardBody(
             timeFormat = "%F"
           )
           
+        ),
+        box(
+          title = "average number of packages per ctv",
+          width = 6,
+          solidHeader = TRUE,
+          status = "primary"
+          
         )
       )
     ),
@@ -106,11 +113,6 @@ body <- dashboardBody(
           multiple = TRUE,
           options = list(maxItems = 100),
           selected = "dplyr"
-        ),
-        selectInput(
-          'subcategory_select',
-          "*only apperas when Psychometrics is selected: you can specify on subcategories",
-          c("All")
         )
       ),
       fluidRow(

@@ -29,7 +29,7 @@ server <- function(input, output, session) {
       ggplotly (p2)
    })
    
-   
+   #psycho specific
    time_series_monthly_sub <- reactive({
       selected_ctvs <- input$ctvs_select
       selected_sub <- input$subcategory_select
@@ -79,7 +79,7 @@ server <- function(input, output, session) {
       
    })
    
-   
+
    
    output$downloads_per_ctv <- renderPlotly({
       data = downloads_per_ctv()
