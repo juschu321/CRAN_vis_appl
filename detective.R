@@ -30,3 +30,11 @@ count_pctv <- cd %>%
 
 
 
+count_pkg <-packages_per_ctv %>%
+  select(ctv, package) %>%
+  filter(ctv == "Psychometrics") %>%
+  group_by(ctv) %>%
+  summarise(count = n_distinct(package))
+
+
+#

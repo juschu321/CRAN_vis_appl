@@ -78,7 +78,6 @@ server <- function(input, output, session) {
          mutate(avg_pkg = avg / count)
       
    })
-   
 
    
    output$downloads_per_ctv <- renderPlotly({
@@ -89,6 +88,22 @@ server <- function(input, output, session) {
       ggplotly(p)
    })
    
+   pkg_per_ctv <- reactive({
+   
+      selected_ctvs <- input$ctvs_select
+      selected_from <- input$year[1]
+      selected_to <- input$year[2]
+      
+         count_pkg <-packages_per_ctv %>%
+         select(ctv, package) %>%
+         filter(ctv == selected_ctvs) %>%
+         group_by(ctv) %>%
+         summarise(count = n_distinct(package))
+      })
+   
+   
+   
+   output$pkg_per_ctv <-renderTable({pkg_per_ctv()})
    
    
    #### PACKAGE LEVEL ####

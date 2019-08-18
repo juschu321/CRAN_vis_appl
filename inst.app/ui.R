@@ -91,7 +91,8 @@ body <- dashboardBody(
           title = "average number of packages per ctv",
           width = 6,
           solidHeader = TRUE,
-          status = "primary"
+          status = "primary",
+          tableOutput("pkg_per_ctv")
           
         )
       )
