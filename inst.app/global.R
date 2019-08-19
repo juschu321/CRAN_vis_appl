@@ -15,6 +15,7 @@ library(xml2)
 library(lubridate)
 library(plotly)
 library(readr)
+library(visNetwork)
 
 packages_per_ctv <- read_csv("data/packages_per_ctv.csv",
                              col_types = cols(X1 = col_skip()))

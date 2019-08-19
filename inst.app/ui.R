@@ -137,9 +137,10 @@ body <- dashboardBody(
           title = "plot: dependencies",
           width = 6,
           solidHeader = TRUE,
-          status = "primary",
-          "plot dependencies"
+          status = "primary"
+          #,visNetworkOutput("dep_plot", width = "100%")
         ),
+        
         box(
           title = "plot: linechart",
           width = 6,

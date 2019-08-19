@@ -139,5 +139,18 @@ server <- function(input, output, session) {
    })
    
    
+   #edges <- edgelist%>% 
+   #   rowid_to_column("ID")
+   
+   #names(edges)[2] <- "from"
+   #names(edges)[3] <- "to"
+   
+   #nodes <- edges%>%
+   #   select(ID)
+   
+   #output$dep_plot <- renderVisNetwork(
+   #   nodes = nodes("ID" = 1:2),
+   #   edges = edges(from = c("abc", "abc"), to = c("R","abc.data")),
+   #   visNetwork(nodes,edges))
+   
 }
-

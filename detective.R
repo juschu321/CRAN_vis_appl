@@ -41,5 +41,6 @@ count_pkg <- packages_per_ctv %>%
   group_by(ctv) %>%
   summarise(count = n_distinct(package))
 
+install.packages("visNetwork")
 
-#
+vignette("Introduction-to-visNetwork") 
