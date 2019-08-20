@@ -22,15 +22,15 @@ c <-
               by = c("package" = "package"))
 
 #all Psychometrics packages
-cf <- c %>%
+ctv_filter <- c %>%
   filter (ctv == "Psychometrics")
 
 #220 packages of Psychometrics April 2019
-cd <- cf %>%
+ctv_date <- ctv_filter %>%
   filter (month == "2019-04-01")
 
 #number of downloads of Psychometrics based on tutti_time_monthly_package
-count_pctv <- cd %>%
+count_psych_ctv <- ctv_date %>%
   summarise(total = sum(total))
 
 

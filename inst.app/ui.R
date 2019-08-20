@@ -179,7 +179,8 @@ body <- dashboardBody(
             min = as.Date("2012-10-01"),
             max = Sys.Date(),
             value = c(as.Date("2018-08-01"), Sys.Date()),
-            timeFormat = "%F"
+            timeFormat = "%Y"
+            
           )
           
         )
