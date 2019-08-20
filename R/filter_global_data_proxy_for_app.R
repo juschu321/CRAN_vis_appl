@@ -8,6 +8,7 @@
 #' @param selected_min_count int
 #' @param selected_ctv chr 
 #' @param level chr
+#' @param tutti_timeseries (created by get_merged_data_tutti_timeseries)
 #' @export
 get_filter_timeseries_data <-
   function (selected_from = as.Date("2012-10-01"),

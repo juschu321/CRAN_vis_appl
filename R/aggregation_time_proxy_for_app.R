@@ -2,7 +2,6 @@
 #' 
 #' time aggregation online (not necessary now, because already aggregated beforehand)
 #' @param filtered_data dataframe contains data according to parameter in filter function
-#' @param tutti_timeseries dataframe contains downloadstatistics per package (+ corresponding ctv)
 #' @export
 aggregate_timeseries_data <-
   function (timelevel = "monthly", filtered_data) {
