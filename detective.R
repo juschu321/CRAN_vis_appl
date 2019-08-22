@@ -50,3 +50,8 @@ top_CRAN_1month <- cran_top_downloads(when = c("last-month"), count = 10)
 
 tutti <- available.packages(filters = "CRAN")
 # 14,782 entries, where I take the date from?
+
+#to check if in tutti_timeseries are some packages twice
+tutti_timeseries%>%
+  count(package)
+#3314 entries 

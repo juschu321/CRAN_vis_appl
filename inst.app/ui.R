@@ -88,7 +88,7 @@ body <- dashboardBody(
           
         ),
         box(
-          title = "average number of packages per ctv",
+          title = "number of packages per ctv",
           width = 6,
           solidHeader = TRUE,
           status = "primary",

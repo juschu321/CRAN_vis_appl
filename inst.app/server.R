@@ -13,7 +13,7 @@ server <- function(input, output, session) {
       selected_to <- input$year[2]
       
       filtered_data <- tutti_time_monthly_ctv %>%
-         filter (ctv == selected_ctvs) %>%
+         filter (ctv %in% selected_ctvs) %>%
          filter (month >= selected_from, month <= selected_to)
    })
    
@@ -67,7 +67,7 @@ server <- function(input, output, session) {
       selected_to <- input$year[2]
       
       monthly_avg_per_ctv <- tutti_time_monthly_ctv %>%
-         filter (ctv == selected_ctvs) %>%
+         filter (ctv %in% selected_ctvs) %>%
          filter (month >= selected_from, month <= selected_to) %>%
          select (ctv, total) %>%
          group_by(ctv) %>% # group by ctv
@@ -75,7 +75,7 @@ server <- function(input, output, session) {
       
       count_pkg_per_ctv <- packages_per_ctv %>%
          select(ctv, package) %>%
-         filter(ctv == selected_ctvs) %>%
+         filter(ctv %in% selected_ctvs) %>%
          group_by(ctv) %>%
          summarise(count = n_distinct(package))
       
@@ -101,9 +101,9 @@ server <- function(input, output, session) {
       
          count_pkg <-packages_per_ctv %>%
          select(ctv, package) %>%
-         filter(ctv == selected_ctvs) %>%
+         filter(ctv %in% selected_ctvs) %>%
          group_by(ctv) %>%
-         summarise(count = n_distinct(package))
+         summarise(count = n())
       })
    
    
@@ -118,7 +118,7 @@ server <- function(input, output, session) {
       selected_to <- input$date_selection_package[2]
       
       filtered_data <- tutti_time_monthly_package %>%
-         filter (package == selected_pkgs) %>%
+         filter (package %in% selected_pkgs) %>%
          filter (month >= selected_from, month <= selected_to)
    })
    

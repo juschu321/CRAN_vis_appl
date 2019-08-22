@@ -24,17 +24,14 @@ psy_subcategories <- get_subcategory_of_psy_packages(psy_packages)
 
 
 tutti_time_monthly_ctv <- tutti_timeseries %>%
-  distinct(date, count, ctv) %>%
-  mutate(month = as.Date(cut(date, breaks = "month"))) %>%
-  distinct(ctv, month, count) %>%
+  mutate(month = as.Date(cut(date,breaks = "month"))) %>%
   group_by(ctv, month) %>% 
   summarise(total = sum(count))
 
 #distinct() is important to get each package just once
 #because some packages are hosted in more CTVS
 tutti_time_monthly_package <- tutti_timeseries %>%
-  distinct(date,count,package) %>%
-  mutate(month = as.Date(cut(date, breaks = "month"))) %>%
+  mutate(month = as.Date(cut(date,breaks = "month"))) %>%
   distinct(package, month, count) %>%
   group_by(package, month) %>% 
   summarise(total = sum(count))
