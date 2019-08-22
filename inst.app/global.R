@@ -53,3 +53,5 @@ psy_subs <- packages_per_psy_sub %>%
 
 edgelist <- read_csv("data/edgelist.csv",
                      col_types = cols(X1 = col_skip()))
+names(edgelist) <- c("from", "to", "type")
+edgelist$type <- as.factor(edgelist$type)

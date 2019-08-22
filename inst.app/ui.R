@@ -138,7 +138,7 @@ body <- dashboardBody(
           width = 6,
           solidHeader = TRUE,
           status = "primary"
-          #,visNetworkOutput("dep_plot", width = "100%")
+          ,visNetworkOutput("dep_plot", width = "100%")
         ),
         
         box(
@@ -184,19 +184,7 @@ body <- dashboardBody(
           )
           
         )
-      )),
-    
-    #####tab update data + ui#####
-    tabPanel("update data",
-             box(
-               title = "d3test",
-               width = 6,
-               solidHeader = TRUE,
-               status = "primary"
-               
-             )
-             
-    )
+      ))
   )))
 
 

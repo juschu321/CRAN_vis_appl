@@ -138,19 +138,41 @@ server <- function(input, output, session) {
       input$checkboxGroup
    })
    
-   
-   #edges <- edgelist%>% 
-   #   rowid_to_column("ID")
-   
-   #names(edges)[2] <- "from"
-   #names(edges)[3] <- "to"
-   
-   #nodes <- edges%>%
-   #   select(ID)
-   
-   #output$dep_plot <- renderVisNetwork(
-   #   nodes = nodes("ID" = 1:2),
-   #   edges = edges(from = c("abc", "abc"), to = c("R","abc.data")),
-   #   visNetwork(nodes,edges))
+   output$dep_plot <- renderVisNetwork ({
+      
+      selected_pkgs <- input$packages_select
+      vis.edges <- edgelist %>%
+         filter(from %in% selected_pkgs)%>%
+         distinct(from, to, type)
+      
+      #vis.edges <- data.frame(from = edgelist$this[1:100], to = edgelist$needs_this[1:100], type=edgelist$type[1:100])
+      unique_nodes_1 = data.frame(id = unique( vis.edges$from))
+      unique_nodes_2 = data.frame(id = unique( vis.edges$to))
+      
+      vis.nodes <- unique(bind_rows(unique_nodes_1, unique_nodes_2))
+      vis.nodes$title  <- vis.nodes$id # Text on click
+      vis.nodes$borderWidth <- 1
+      vis.nodes$borderWidthSelected <- 3
+      vis.nodes$selected <- vis.nodes$id %in% selected_pkgs
+      vis.nodes$group <- ifelse(vis.nodes$selected == TRUE, "selected", "dependent")
+
+      vis.edges$color <- c("slategrey", "tomato", "gold")[vis.edges$type]
+      vis.edges$width <- 4
+      vis.edges$hoverWidth <- 7
+     # vis.edges$arrows = c("to", "from")
+      vis.edges$selfReferenceSize = 15
+      
+      ledges <- data.frame(color = c("slategrey", "tomato", "gold"),
+                           label = c("depends", "imports", "suggests"))
+      
+      
+      visNetwork(vis.nodes, vis.edges, width = "100%") %>%
+         visEdges(arrows = list (to = list(enabled = TRUE))) %>%
+         visGroups(groupname = "selected", color = list(background = "gray", border = "black"))%>%
+        # visGroups(groupname = "dependent", color = list(background = "blue", border = "blue"))%>%
+         visOptions(highlightNearest = list(enabled = T, degree = 1, hover = T)) %>%
+         visLegend(main="Legend", addEdges = ledges, useGroups = TRUE) %>%
+         visInteraction(keyboard = TRUE, tooltipDelay = 50) 
+   })
    
 }
