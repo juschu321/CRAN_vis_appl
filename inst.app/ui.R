@@ -81,12 +81,13 @@ body <- dashboardBody(
             'year',
             "time span",
             min = as.Date("2012-10-01"),
-            max = Sys.Date(),
-            value = c(as.Date("2018-08-01"), Sys.Date()),
-            timeFormat = "%F"
+            max = as.Date("2019-07-31"),
+            value = c(as.Date("2018-07-31"), as.Date("2019-07-31")),
+            timeFormat = "%Y-%m"
           )
           
         ),
+        
         box(
           title = "number of packages per ctv",
           width = 6,
@@ -177,9 +178,9 @@ body <- dashboardBody(
             'date_selection_package',
             "time span",
             min = as.Date("2012-10-01"),
-            max = Sys.Date(),
-            value = c(as.Date("2018-08-01"), Sys.Date()),
-            timeFormat = "%Y"
+            max = as.Date("2019-07-31"),
+            value = c(as.Date("2018-07-31"), as.Date("2019-07-31")),
+            timeFormat = "%Y-%m"
             
           )
           

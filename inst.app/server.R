@@ -52,6 +52,7 @@ server <- function(input, output, session) {
       data = time_series_monthly_sub()
       sub_plot <- ggplot(data) +
          geom_line(aes (month, total, color= data$category)) +
+         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_breaks = "1 month",
             date_labels = "%Y - %m"
@@ -126,6 +127,7 @@ server <- function(input, output, session) {
       data = time_series_monthly_pkg()
       ggplot(data) +
          geom_line(aes (month, total, color= data$package)) +
+         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_breaks = "1 month",
             date_minor_breaks = "1 month",
