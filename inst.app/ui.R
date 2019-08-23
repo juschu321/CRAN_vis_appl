@@ -117,22 +117,24 @@ body <- dashboardBody(
           selected = "dplyr"
         )
       ),
-      box(
-        title = "filter",
-        width = 12,
-        solidHeader = TRUE,
-        status = "primary",
-        selectizeInput(
-          'packages_select',
-          'packages to select',
-          choices = list(Psychometrics = c('ade4', 'lavaan' ),
-                         Bayesian = c('ku', 'x')),
+    
+      
+      #box(
+        #title = "filter",
+        #width = 12,
+        #solidHeader = TRUE,
+        #status = "primary",
+        #selectizeInput(
+         # 'packages_select',
+          #'packages to select',
+          #choices = list(Psychometrics = c('ade4', 'lavaan' ),
+           #              Bayesian = c('ku', 'x')),
           
-          multiple = TRUE,
-          options = list(maxItems = 100),
+          #multiple = TRUE,
+          #options = list(maxItems = 100),
           #selected = "dplyr"
-          )
-        ),
+          #)
+        #),
       fluidRow(
         box(
           title = "plot: dependencies",
@@ -159,14 +161,14 @@ body <- dashboardBody(
           solidHeader = TRUE,
           status = "primary",
           checkboxGroupInput(
-            'checkGroup',
+            'dep_select',
             label = "specify type of dependencies",
             choices = list(
-              "imports" = 1,
-              "depends" = 2,
+              "depends" = 1,
+              "imports" = 2,
               "suggests" = 3
             ),
-            selected = 0
+            selected = c(1,2,3)
           )
         ),
         box(

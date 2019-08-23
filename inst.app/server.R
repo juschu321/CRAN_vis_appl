@@ -89,7 +89,9 @@ server <- function(input, output, session) {
    output$downloads_per_ctv <- renderPlotly({
       data = downloads_per_ctv()
       p<- ggplot(data) +
-         geom_col(aes (ctv, avg_pkg, fill= data$ctv))
+         geom_col(aes (ctv, avg_pkg, fill= data$ctv))+
+         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+         
       
       ggplotly(p)
    })
@@ -143,20 +145,27 @@ server <- function(input, output, session) {
    output$dep_plot <- renderVisNetwork ({
       
       selected_pkgs <- input$packages_select
+      
+      #selected_dep <- input$dep_select
+      
+     # vis.edges$type <- edgelist%>% 
+         #filter(type %in% selected_dep)
+      
       vis.edges <- edgelist %>%
          filter(from %in% selected_pkgs)%>%
          distinct(from, to, type)
       
-      #vis.edges <- data.frame(from = edgelist$this[1:100], to = edgelist$needs_this[1:100], type=edgelist$type[1:100])
       unique_nodes_1 = data.frame(id = unique( vis.edges$from))
       unique_nodes_2 = data.frame(id = unique( vis.edges$to))
-      
+
       vis.nodes <- unique(bind_rows(unique_nodes_1, unique_nodes_2))
-      vis.nodes$title  <- vis.nodes$id # Text on click
+      vis.nodes$title <- vis.nodes$id # Text on click
       vis.nodes$borderWidth <- 1
       vis.nodes$borderWidthSelected <- 3
       vis.nodes$selected <- vis.nodes$id %in% selected_pkgs
       vis.nodes$group <- ifelse(vis.nodes$selected == TRUE, "selected", "dependent")
+      #vis.nodes$dep <- sample(c("depends", "imports", "suggests"), nrow(vis.nodes), replace = TRUE)
+      
 
       vis.edges$color <- c("slategrey", "tomato", "gold")[vis.edges$type]
       vis.edges$width <- 4
@@ -166,14 +175,15 @@ server <- function(input, output, session) {
       
       ledges <- data.frame(color = c("slategrey", "tomato", "gold"),
                            label = c("depends", "imports", "suggests"))
+                           #,selected_dep = c(1,2,3))
       
       
       visNetwork(vis.nodes, vis.edges, width = "100%") %>%
          visEdges(arrows = list (to = list(enabled = TRUE))) %>%
          visGroups(groupname = "selected", color = list(background = "gray", border = "black"))%>%
-        # visGroups(groupname = "dependent", color = list(background = "blue", border = "blue"))%>%
          visOptions(highlightNearest = list(enabled = T, degree = 1, hover = T)) %>%
          visLegend(main="Legend", addEdges = ledges, useGroups = TRUE) %>%
+         #visOptions(selectedBy = "dep")%>%
          visInteraction(keyboard = TRUE, tooltipDelay = 50) 
    })
    

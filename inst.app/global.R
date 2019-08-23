@@ -45,6 +45,7 @@ ctvs <- packages_per_ctv %>%
   distinct(ctv)
 
 packages <- packages_per_ctv %>%
+  filter(core == FALSE)%>%
   distinct(package)
 
 psy_subs <- packages_per_psy_sub %>%
