@@ -52,6 +52,8 @@ server <- function(input, output, session) {
       data = time_series_monthly_sub()
       sub_plot <- ggplot(data) +
          geom_line(aes (month, total, color= data$category)) +
+         theme(legend.position="bottom") +
+         theme(legend.text=element_text(size=5))+
          theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_breaks = "1 month",
@@ -125,10 +127,15 @@ server <- function(input, output, session) {
          filter (month >= selected_from, month <= selected_to)
    })
    
-   output$pkg_plot <- renderPlot({
+   
+   
+   
+   output$pkg_plot <- renderPlotly({
       data = time_series_monthly_pkg()
       ggplot(data) +
          geom_line(aes (month, total, color= data$package)) +
+         theme(legend.position="bottom") +
+         theme(legend.text=element_text(size=5))+
          theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_breaks = "1 month",

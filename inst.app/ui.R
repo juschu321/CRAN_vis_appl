@@ -149,7 +149,7 @@ body <- dashboardBody(
           width = 6,
           solidHeader = TRUE,
           status = "primary",
-          plotOutput("pkg_plot")
+          plotlyOutput("pkg_plot")
         )
         
       ),

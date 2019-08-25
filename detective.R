@@ -55,3 +55,11 @@ tutti <- available.packages(filters = "CRAN")
 tutti_timeseries%>%
   count(package)
 #3314 entries 
+
+#in more than one ctv
+more_than_one <- packages_per_ctv %>%
+  filter(core == FALSE) %>%
+  select(package, ctv) %>%
+  group_by(package)%>%
+  count()%>%
+  filter(n >= 2)
