@@ -3,16 +3,26 @@ dep <- edgelist%>%
   group_by(to)%>%
   summarise(count = n()) 
 
+dep_nr <- inner_join(dep, n_ctv_p_pkg, by = c("to" = "package"))
+
+#ranking ctv tutti timespan 
+overview <- tutti_time_monthly_ctv%>%
+  select(ctv, total, month)%>%
+  group_by(ctv, month)%>%
+  filter(month >= as.Date("2012-10-01"), month <= as.Date("2019-07-01"))%>%
+  group_by(ctv)%>%
+  summarise(count = sum(total))
 
 #ranking over time 
 overview <- tutti_time_monthly_ctv%>%
+  select(ctv, total, month)%>%
   filter(month >= as.Date("2012-10-01"), month <= as.Date("2019-07-01"))%>%
   group_by(ctv,month)%>%
   summarise(count = sum(total))%>%
   group_by(month)%>%
   mutate(rank = 41-rank(interaction(ctv, count)))
 
-overview%>%
+rank_tutti <- overview%>%
   group_by(ctv)%>%
   summarise(mean(rank), sd(rank))
 
@@ -45,7 +55,7 @@ select(package, total, month)%>%
   group_by(package)%>%
   summarise(count = sum(total))
 
-#psy packages which are in more than one CTV 
+#psy packages which are in more than one CTV  (44)
 psy_more <- inner_join(more_than_one, packages_per_ctv, by = c("package" = "package") )%>%
   filter(core == FALSE)%>%
   filter(ctv == "Psychometrics")
