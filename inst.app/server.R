@@ -21,7 +21,6 @@ server <- function(input, output, session) {
       data = time_series_monthly_ctv()
       p2<- ggplot(data) +
          geom_line(aes (month, total, color= data$ctv)) +
-         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_labels = "%Y - %m")
 
@@ -49,7 +48,6 @@ server <- function(input, output, session) {
          geom_line(aes (month, total, color= data$category)) +
          theme(legend.position="bottom") +
          theme(legend.text=element_text(size=5))+
-         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
             date_labels = "%Y - %m"
          )
@@ -130,9 +128,7 @@ server <- function(input, output, session) {
          geom_line(aes (month, total, color= data$package)) +
          theme(legend.position="bottom") +
          theme(legend.text=element_text(size=5))+
-         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
-            date_minor_breaks = "1 month",
             date_labels = "%Y - %m"
          )
       
