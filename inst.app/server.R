@@ -23,13 +23,8 @@ server <- function(input, output, session) {
          geom_line(aes (month, total, color= data$ctv)) +
          theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
-            date_breaks = "1 month",
             date_labels = "%Y - %m")
-            #showticklabels = TRUE,
-            #tickangle = 45
-            #+ scale_x_date(date_breaks = "1 year", date_labels = "%Y")
-            
-   
+
       
       ggplotly (p2)
    })
@@ -56,7 +51,6 @@ server <- function(input, output, session) {
          theme(legend.text=element_text(size=5))+
          theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
-            date_breaks = "1 month",
             date_labels = "%Y - %m"
          )
       
@@ -138,7 +132,6 @@ server <- function(input, output, session) {
          theme(legend.text=element_text(size=5))+
          theme(axis.text.x = element_text(angle = 90, hjust = 1))+
          scale_x_date(
-            date_breaks = "1 month",
             date_minor_breaks = "1 month",
             date_labels = "%Y - %m"
          )
