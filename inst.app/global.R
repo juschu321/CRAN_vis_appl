@@ -56,3 +56,14 @@ edgelist <- read_csv("data/edgelist.csv",
                      col_types = cols(X1 = col_skip()))
 names(edgelist) <- c("from", "to", "type")
 edgelist$type <- as.factor(edgelist$type)
+
+#preparation for selectize grouping (list of vectors per ctv)
+packages_per_ctv_ohne_core <- packages_per_ctv%>%
+  select(ctv, package)
+
+pkg_list_grouping <- split(packages_per_ctv_ohne_core, f = packages_per_ctv_ohne_core$ctv)
+
+pkg_list_grouping_1 <- list()
+for (ctv in names(pkg_list_grouping)){
+  pkg_list_grouping_1[[ctv]] <- as.vector(pkg_list_grouping[[ctv]]$package)
+}

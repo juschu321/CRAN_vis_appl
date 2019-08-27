@@ -153,13 +153,13 @@ server <- function(input, output, session) {
       
       selected_pkgs <- input$packages_select
       
-      #selected_dep <- input$dep_select
+      selected_dep <- input$dep_select
       
-     # vis.edges$type <- edgelist%>% 
+      #vis.edges$type <- edgelist%>% 
          #filter(type %in% selected_dep)
       
       vis.edges <- edgelist %>%
-         filter(from %in% selected_pkgs)%>%
+         filter(from %in% selected_pkgs, type %in% selected_dep )%>%
          distinct(from, to, type)
       
       unique_nodes_1 = data.frame(id = unique( vis.edges$from))
