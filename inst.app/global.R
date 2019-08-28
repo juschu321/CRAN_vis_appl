@@ -57,13 +57,18 @@ edgelist <- read_csv("data/edgelist.csv",
 names(edgelist) <- c("from", "to", "type")
 edgelist$type <- as.factor(edgelist$type)
 
-#preparation for selectize grouping (list of vectors per ctv)
-packages_per_ctv_ohne_core <- packages_per_ctv%>%
-  select(ctv, package)
 
-pkg_list_grouping <- split(packages_per_ctv_ohne_core, f = packages_per_ctv_ohne_core$ctv)
+#option to check for packages which are not included in more ctvs 
+# number of ctvs per packages
+n_ctv_p_pkg <- packages_per_ctv %>%
+  filter(core == FALSE) %>%
+  select(package, ctv) %>%
+  group_by(package)%>%
+  summarise(count = n())
 
-pkg_list_grouping_1 <- list()
-for (ctv in names(pkg_list_grouping)){
-  pkg_list_grouping_1[[ctv]] <- as.vector(pkg_list_grouping[[ctv]]$package)
-}
+
+
+
+
+
+

@@ -63,3 +63,18 @@ more_than_one <- packages_per_ctv %>%
   group_by(package)%>%
   count()%>%
   filter(n >= 2)
+
+
+
+hist_data <- inner_join(edgelist, n_ctv_p_pkg, by=c("to" = "package"))%>%
+  group_by(to) %>%  summarise(count = n())%>% filter(count > 300) 
+
+filtered_packages_per_ctv <- packages_per_ctv %>% select (package, ctv) %>% filter (package %in% hist_data$to)
+pkg_list_grouping <- split(filtered_packages_per_ctv, f = filtered_packages_per_ctv$ctv)
+
+
+
+pkg_list_grouping_1 <- list()
+for (ctv in names(pkg_list_grouping)){
+  pkg_list_grouping_1[[ctv]] <- as.vector(pkg_list_grouping[[ctv]]$package)
+}

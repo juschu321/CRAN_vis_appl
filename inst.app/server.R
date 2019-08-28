@@ -55,7 +55,7 @@ server <- function(input, output, session) {
       ggplotly (sub_plot)
    })
    
-   
+
    downloads_per_ctv <- reactive({
       selected_ctvs <- input$ctvs_select
       selected_from <- input$year[1]
@@ -120,7 +120,45 @@ server <- function(input, output, session) {
    })
    
    
+   filtered_packages_imp <- reactive({
+      
+      selected_min_importance <- input$importance_range[1]
+      selected_max_importance <- input$importance_range[2]
+      selected_dep <- input$dep_select
+      
+      
+      hist_data <- inner_join(edgelist, n_ctv_p_pkg, by=c("to" = "package")) %>%
+         filter(type %in% selected_dep)%>%
+         group_by(to, type)%>%
+         summarise(count = n()) %>%
+         filter(count >= selected_min_importance, count <= selected_max_importance)
+         })
    
+   
+   output$package_selection <- renderUI({
+      
+      filtered_packages <- filtered_packages_imp()
+      
+      selectizeInput(
+         'packages_select',
+         'packages to select',
+         choices = filtered_packages$to,
+         
+         multiple = TRUE,
+         options = list(maxItems = 10),
+         selected = input$packages_select
+      )
+      
+   })
+   
+   output$importance_hist <- renderPlotly({
+      data <- filtered_packages_imp()
+      data$type <- as.factor(data$type)
+      
+      ggplot(data, aes (data$count, fill = data$type))+
+         geom_histogram(binwidth = 20,position = "dodge")+
+         scale_fill_manual(values  = c("depends" ="slategrey","imports"= "tomato","suggests" = "gold") )
+   })   
    
    output$pkg_plot <- renderPlotly({
       data = time_series_monthly_pkg()
