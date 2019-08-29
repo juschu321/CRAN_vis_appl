@@ -1,9 +1,20 @@
+n_ctv_p_pkg <- packages_per_ctv %>%
+  filter(core == FALSE) %>%
+  select(package, ctv) %>%
+  group_by(package)%>%
+  count()
+
 dep <- edgelist%>%
   filter(type %in% c("imports", "depends"))%>%
   group_by(to)%>%
   summarise(count = n()) 
 
 dep_nr <- inner_join(dep, n_ctv_p_pkg, by = c("to" = "package"))
+
+ggplot(dep_nr, aes (dep_nr$count))+
+  geom_histogram(binwidth = 5)+
+  scale_y_sqrt()
+
 
 #ranking ctv tutti timespan 
 overview <- tutti_time_monthly_ctv%>%
@@ -66,10 +77,10 @@ psycho_more <- psy_more %>%
 
 #option to check for packages which are not included in more ctvs 
 n_ctv_p_pkg <- packages_per_ctv %>%
-  filter(core == FALSE) %>%
+  #filter(core == FALSE) %>%
   select(package, ctv) %>%
   group_by(package)%>%
-  count()
+  summarise(count = n())
 
 tutti_n_p_ctv <- inner_join(tutti_time_monthly_package, n_ctv_p_pkg, by = c("package" = "package"))
 

@@ -119,6 +119,18 @@ server <- function(input, output, session) {
          filter (month >= selected_from, month <= selected_to)
    })
    
+   output$pkg_plot <- renderPlotly({
+      data = time_series_monthly_pkg()
+      ggplot(data) +
+         geom_line(aes (month, total, color= data$package)) +
+         theme(legend.position="bottom") +
+         theme(legend.text=element_text(size=5))+
+         scale_x_date(
+            date_labels = "%Y - %m"
+         )
+      
+   })
+   
    
    filtered_packages_imp <- reactive({
       
@@ -160,17 +172,7 @@ server <- function(input, output, session) {
          scale_fill_manual(values  = c("depends" ="slategrey","imports"= "tomato","suggests" = "gold") )
    })   
    
-   output$pkg_plot <- renderPlotly({
-      data = time_series_monthly_pkg()
-      ggplot(data) +
-         geom_line(aes (month, total, color= data$package)) +
-         theme(legend.position="bottom") +
-         theme(legend.text=element_text(size=5))+
-         scale_x_date(
-            date_labels = "%Y - %m"
-         )
-      
-   })
+
    
    output$value <- renderPrint({
       input$checkboxGroup

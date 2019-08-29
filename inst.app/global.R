@@ -65,10 +65,3 @@ n_ctv_p_pkg <- packages_per_ctv %>%
   select(package, ctv) %>%
   group_by(package)%>%
   summarise(count = n())
-
-
-
-
-
-
-
