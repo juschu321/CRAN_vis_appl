@@ -83,8 +83,8 @@ body <- dashboardBody(
               'year',
               "time span",
               min = as.Date("2012-10-01"),
-              max = as.Date("2019-07-31"),
-              value = c(as.Date("2018-07-31"), as.Date("2019-07-31")),
+              max = as.Date("2019-08-31"),
+              value = c(as.Date("2018-07-31"), as.Date("2019-08-31")),
               timeFormat = "%Y-%m"
             )
             
@@ -184,8 +184,8 @@ body <- dashboardBody(
                                         'date_selection_package',
                                         "time span",
                                         min = as.Date("2012-10-01"),
-                                        max = as.Date("2019-07-31"),
-                                        value = c(as.Date("2018-07-31"), as.Date("2019-07-31")),
+                                        max = as.Date("2019-08-31"),
+                                        value = c(as.Date("2018-08-31"), as.Date("2019-08-31")),
                                         timeFormat = "%Y-%m"
                                         
                                       )
