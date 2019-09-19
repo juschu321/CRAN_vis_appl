@@ -15,6 +15,11 @@ ggplot(dep_nr, aes (dep_nr$count))+
   geom_histogram(binwidth = 5)+
   scale_y_sqrt()
 
+#check the download statistics for specific packages
+x <- tutti_time_monthly_package%>%
+  filter(package %in% c("MASS", "ggplot2", "Rcpp"))%>%
+  group_by(package)%>%
+  summarise(count = sum(total))
 
 #ranking ctv tutti timespan 
 overview <- tutti_time_monthly_ctv%>%

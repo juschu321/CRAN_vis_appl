@@ -3,8 +3,7 @@ packages_per_ctv <- get_packages_per_ctv()
 
 #psychometrics specific
 psy_packages <- get_psy_packages()
-psy_sub <-
-  get_subcategory_of_psy_packages(psy_packages = psy_packages)
+psy_sub <- get_subcategory_of_psy_packages(psy_packages = psy_packages)
 
 #get global data
 global_edgelist <- data.frame()
@@ -21,24 +20,17 @@ for (view in ctv::available.views()) {
   global_download <- rbind(global_download, download_statistics)
 }
 
+#get basic dataframe to create the VisNetwork
+edgelist <- get_tutti_dependencies(global_edgelist = global_edgelist, packages_per_ctv = packages_per_ctv)
+
 #get basic dataframe to generate tutti_time_monthly_ctv/pkg
-tutti_timeseries <-
-  inner_join(global_download, packages_per_ctv, by = c("package" = "package")) %>%
-  filter(core == FALSE)
+tutti_timeseries <- get_tutti_timeseries(global_download = global_download,packages_per_ctv = packages_per_ctv)
 
 #aggregate data (in terms of time and ctv/ pkg as basis for the plots)
-tutti_time_monthly_ctv <- tutti_timeseries %>%
-  mutate(month = as.Date(cut(date, breaks = "month"))) %>%
-  group_by(ctv, month) %>%
-  summarise(total = sum(count))
+tutti_time_monthly_ctv <- get_tutti_time_monthly_ctv(tutti_timeseries = tutti_timeseries)
 
 #distinct() is important to get each package just once
 #because some packages are hosted in more CTVS
-tutti_time_monthly_package <- tutti_timeseries %>%
-  mutate(month = as.Date(cut(date, breaks = "month"))) %>%
-  distinct(package, month, count) %>%
-  group_by(package, month) %>%
-  summarise(total = sum(count))
+tutti_time_monthly_package <- get_tutti_time_monthly_pkg(tutti_timeseries = tutti_timeseries)
 
-#get basic dataframe to create the VisNetwork
-edgelist <- inner_join(global_edgelist, packages_per_ctv, by = c ("this" = "package"))
+export_data_to_csv()

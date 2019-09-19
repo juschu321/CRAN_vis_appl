@@ -78,3 +78,8 @@ pkg_list_grouping_1 <- list()
 for (ctv in names(pkg_list_grouping)){
   pkg_list_grouping_1[[ctv]] <- as.vector(pkg_list_grouping[[ctv]]$package)
 }
+
+#checked if number of core-pkg play a role 
+number_core_per_ctv <- packages_per_ctv%>%
+  group_by(ctv)%>%
+  summarise(total = sum(core==TRUE))
