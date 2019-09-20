@@ -1,9 +1,7 @@
 #data preparation (to generate updated data basis)
-
 library(cranlogs)
 library(ctv)
 library(dplyr)
-library(ggplot2)
 library(scales)
 library(cranly)
 library(tidyverse)
@@ -13,23 +11,18 @@ library(rvest)
 library(magrittr)
 library(xml2)
 library(lubridate)
-library(plotly)
 library(readr)
-
-#to start the data reproduction you have to load the 
-#externally saved functions into the R environment 
+#to start the data reproduction you have to load the externally saved functions into the R environment 
 #(saved in the file /CRAN_vis_appl/R)
 
 #generates a list with all packages in the ctvs (ctv::available views)
-#basis for lots of 
 packages_per_ctv <- get_packages_per_ctv()
 
 #psychometrics specific (creates a list of psy packages according to categories on CRAN)
 psy_packages <- get_psy_packages()
 psy_sub <- get_subcategory_of_psy_packages(psy_packages = psy_packages)
 
-#get global data (collects data from cranlogs and additional api data 
-#for all packages mentioned in the ctvs)
+#get global data (collects data from cranlogs and additional api data for all pkgs mentioned in the ctvs)
 global_edgelist <- data.frame()
 global_api <- list()
 global_download <- data.frame ()
