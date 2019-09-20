@@ -45,23 +45,13 @@ ctvs <- packages_per_ctv %>%
   distinct(ctv)
 
 packages <- packages_per_ctv %>%
-  filter(core == FALSE)%>%
+  filter(core == FALSE) %>%
   distinct(package)
 
 psy_subs <- packages_per_psy_sub %>%
   distinct(category)
 
-
 edgelist <- read_csv("data/edgelist.csv",
                      col_types = cols(X1 = col_skip()))
 names(edgelist) <- c("from", "to", "type")
 edgelist$type <- as.factor(edgelist$type)
-
-
-#option to check for packages which are not included in more ctvs 
-# number of ctvs per packages
-n_ctv_p_pkg <- packages_per_ctv %>%
-  filter(core == FALSE) %>%
-  select(package, ctv) %>%
-  group_by(package)%>%
-  summarise(count = n())

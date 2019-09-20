@@ -9,4 +9,4 @@
 #' @export 
 get_tutti_timeseries <- function(global_download, packages_per_ctv) 
   {tutti_timeseries <-
-  inner_join(global_download, packages_per_ctv, by = c("package" = "package"))%>% filter(core == FALSE)}
+  full_join(global_download, packages_per_ctv, by = c("package" = "package"))%>% filter(core == FALSE)}
