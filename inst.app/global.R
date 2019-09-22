@@ -55,3 +55,9 @@ edgelist <- read_csv("data/edgelist.csv",
                      col_types = cols(X1 = col_skip()))
 names(edgelist) <- c("from", "to", "type")
 edgelist$type <- as.factor(edgelist$type)
+
+n_ctv_p_pkg <- packages_per_ctv %>%
+  filter(core == FALSE) %>%
+  select(package, ctv) %>%
+  group_by(package)%>%
+summarise(count = n())
