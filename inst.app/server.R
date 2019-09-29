@@ -139,12 +139,33 @@ server <- function(input, output, session) {
     
     
     hist_data <-
-      inner_join(edgelist, n_ctv_p_pkg, by = c("to" = "package")) %>%
-      filter(type %in% selected_dep) %>%
+      edgelist %>%
       group_by(to, type) %>%
-      summarise(count = n()) %>%
-      filter(count >= selected_min_importance,
-             count <= selected_max_importance)
+      summarise(count = n())
+    
+    # Aggregating all available packages
+    unique_packages_1 <- data.frame(package = unique(edgelist$from))
+    unique_packages_2 <- data.frame(package = unique(edgelist$to))
+    unique_packages <- unique(bind_rows(unique_packages_1, unique_packages_2, packages))
+    
+    # Generate all combinations of dependency types and packages (Cartesian Product)
+    packages_dependency_types <- crossing(unique_packages, data.frame(type=as.factor(c("depends", "imports", "suggests"))))
+    
+    # Merging the Cartesian Product with the calculated importance
+    hist_data <- full_join(hist_data, packages_dependency_types, by=c("to" = "package", "type" = "type"))
+    
+    # Replace NA with 0
+    hist_data$count <- ifelse(is.na(hist_data$count), 0, hist_data$count)
+    
+    # Add flags to indicate whether package is available in download statistics and/or dependency edgelist
+    hist_data$inDownload <- ifelse(hist_data$to %in% tutti_time_monthly_package$package, TRUE, FALSE)
+    hist_data$inEdgelist <- ifelse(hist_data$to %in% edgelist$from, TRUE, FALSE)
+    
+    # Apply filter
+    hist_data <- hist_data %>%
+      filter(count >= selected_min_importance, count <= selected_max_importance) %>%
+      filter(type %in% selected_dep)
+    
   })
   
   
@@ -168,7 +189,7 @@ server <- function(input, output, session) {
     data$type <- as.factor(data$type)
     
     ggplot(data, aes (data$count, fill = data$type)) +
-      geom_histogram(binwidth = 20, position = "dodge") +
+      geom_histogram(binwidth = 10, position = "dodge") +
       scale_fill_manual(values  = c(
         "depends" = "slategrey",
         "imports" = "tomato",

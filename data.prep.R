@@ -49,5 +49,8 @@ tutti_time_monthly_ctv <- get_tutti_time_monthly_ctv(tutti_timeseries = tutti_ti
 #aggregate data (per package and time -> basis for package tab)
 tutti_time_monthly_package <- get_tutti_time_monthly_pkg(tutti_timeseries = tutti_timeseries)
 
+#get importance data (in terms of dependencies)
+importance_data <- get_importance_data(edgelist = edgelist, packages_per_ctv = packages_per_ctv, tutti_time_monthly_package = tutti_time_monthly_package)
+
 #csv files as basis for the application (overwrites existing csv if not adjusted)
 export_data_to_csv()

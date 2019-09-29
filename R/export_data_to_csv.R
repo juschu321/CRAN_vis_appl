@@ -9,4 +9,5 @@ export_data_to_csv <- function() {
   write.csv(packages_per_ctv, file = "inst.app/data/packages_per_ctv.csv")
   write.csv(psy_sub, file = "inst.app/data/psy_sub.csv")
   write.csv(global_edgelist, file = "inst.app/data/edgelist.csv")
+  write.csv(importance_data, file ="inst.app/data/importance_data.csv")
 }

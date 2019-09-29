@@ -110,8 +110,8 @@ body <- dashboardBody(fluidRow(tabBox(
           "importance_range",
           "Range:",
           min = 0,
-          max = 500,
-          value = c(0, 500)
+          max = 1100,
+          value = c(0, 1100)
         )
       ),
       box(

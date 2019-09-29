@@ -41,12 +41,11 @@ tutti_time_monthly_ctv <- read_csv(
 packages_per_psy_sub <- read_csv("data/psy_sub.csv",
                                  col_types = cols(X1 = col_skip()))
 
+importance_data <- read_csv("data/importance_data.csv",
+                           col_types = cols(X1 = col_skip()))
+
 ctvs <- packages_per_ctv %>%
   distinct(ctv)
-
-packages <- packages_per_ctv %>%
-  filter(core == FALSE) %>%
-  distinct(package)
 
 psy_subs <- packages_per_psy_sub %>%
   distinct(category)

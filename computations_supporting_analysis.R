@@ -4,7 +4,7 @@
 #####general computations####
 
 tutti <- available.packages(filters = "CRAN")
-# 14,950 entries
+#  14,978 entries
 
 #returns a list of packages and to how many ctvs they belong to
 n_ctv_p_pkg <- packages_per_ctv %>%
