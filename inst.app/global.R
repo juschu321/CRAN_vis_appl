@@ -42,7 +42,7 @@ packages_per_psy_sub <- read_csv("data/psy_sub.csv",
                                  col_types = cols(X1 = col_skip()))
 
 importance_data <- read_csv("data/importance_data.csv",
-                           col_types = cols(X1 = col_skip()))
+                            col_types = cols(X1 = col_skip()))
 
 ctvs <- packages_per_ctv %>%
   distinct(ctv)
@@ -54,9 +54,3 @@ edgelist <- read_csv("data/edgelist.csv",
                      col_types = cols(X1 = col_skip()))
 names(edgelist) <- c("from", "to", "type")
 edgelist$type <- as.factor(edgelist$type)
-
-n_ctv_p_pkg <- packages_per_ctv %>%
-  filter(core == FALSE) %>%
-  select(package, ctv) %>%
-  group_by(package)%>%
-summarise(count = n())

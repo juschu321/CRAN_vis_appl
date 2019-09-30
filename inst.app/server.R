@@ -27,6 +27,7 @@ server <- function(input, output, session) {
   })
   
   #psycho specific
+  #
   time_series_monthly_sub <- reactive({
     selected_ctvs <- input$ctvs_select
     selected_sub <- input$subcategory_select
@@ -44,6 +45,7 @@ server <- function(input, output, session) {
       summarise(total = sum(total))
   })
   
+  # plot of the psycho categories
   output$sub_plot <- renderPlotly({
     data = time_series_monthly_sub()
     sub_plot <- ggplot(data) +
@@ -121,7 +123,10 @@ server <- function(input, output, session) {
       filter (month >= selected_from, month <= selected_to)
   })
   
+  #line chart R-packages
   output$pkg_plot <- renderPlotly({
+    shiny::validate(need(dim(time_series_monthly_pkg())[1] != 0, 'No Data Available'))
+    
     data = time_series_monthly_pkg()
     ggplot(data) +
       geom_line(aes (month, total, color = data$package)) +
@@ -137,37 +142,11 @@ server <- function(input, output, session) {
     selected_max_importance <- input$importance_range[2]
     selected_dep <- input$dep_select
     
-    
-    hist_data <-
-      edgelist %>%
-      group_by(to, type) %>%
-      summarise(count = n())
-    
-    # Aggregating all available packages
-    unique_packages_1 <- data.frame(package = unique(edgelist$from))
-    unique_packages_2 <- data.frame(package = unique(edgelist$to))
-    unique_packages <- unique(bind_rows(unique_packages_1, unique_packages_2, packages))
-    
-    # Generate all combinations of dependency types and packages (Cartesian Product)
-    packages_dependency_types <- crossing(unique_packages, data.frame(type=as.factor(c("depends", "imports", "suggests"))))
-    
-    # Merging the Cartesian Product with the calculated importance
-    hist_data <- full_join(hist_data, packages_dependency_types, by=c("to" = "package", "type" = "type"))
-    
-    # Replace NA with 0
-    hist_data$count <- ifelse(is.na(hist_data$count), 0, hist_data$count)
-    
-    # Add flags to indicate whether package is available in download statistics and/or dependency edgelist
-    hist_data$inDownload <- ifelse(hist_data$to %in% tutti_time_monthly_package$package, TRUE, FALSE)
-    hist_data$inEdgelist <- ifelse(hist_data$to %in% edgelist$from, TRUE, FALSE)
-    
-    # Apply filter
-    hist_data <- hist_data %>%
-      filter(count >= selected_min_importance, count <= selected_max_importance) %>%
+    hist_data <- importance_data %>%
+      filter(count >= selected_min_importance,
+             count <= selected_max_importance) %>%
       filter(type %in% selected_dep)
-    
   })
-  
   
   output$package_selection <- renderUI({
     filtered_packages <- filtered_packages_imp()
@@ -184,25 +163,40 @@ server <- function(input, output, session) {
     
   })
   
+  
+  # importance histogram (preparation + selection)
   output$importance_hist <- renderPlotly({
     data <- filtered_packages_imp()
     data$type <- as.factor(data$type)
     
-    ggplot(data, aes (data$count, fill = data$type)) +
-      geom_histogram(binwidth = 10, position = "dodge") +
-      scale_fill_manual(values  = c(
-        "depends" = "slategrey",
-        "imports" = "tomato",
-        "suggests" = "gold"
-      ))
+    selected_min_importance <- input$importance_range[1]
+    selected_max_importance <- input$importance_range[2]
+    
+    if ((selected_max_importance - selected_min_importance) > 100) {
+      ggplot(data, aes (data$count, fill = data$type)) +
+        geom_histogram(bins = 50) +
+        scale_fill_manual(values  = c(
+          "depends" = "slategrey",
+          "imports" = "tomato",
+          "suggests" = "gold"
+        ))
+    } else {
+      ggplot(data, aes (data$count, fill = data$type)) +
+        geom_histogram(binwidth = 1) +
+        scale_fill_manual(values  = c(
+          "depends" = "slategrey",
+          "imports" = "tomato",
+          "suggests" = "gold"
+        ))
+    }
   })
   
-  
-  
+  #select type of dependency
   output$value <- renderPrint({
     input$checkboxGroup
   })
   
+  # dependency network
   output$dep_plot <- renderVisNetwork ({
     selected_pkgs <- input$packages_select
     
@@ -214,6 +208,9 @@ server <- function(input, output, session) {
     vis.edges <- edgelist %>%
       filter(from %in% selected_pkgs, type %in% selected_dep) %>%
       distinct(from, to, type)
+    
+    # to avoid red error message in shiny
+    shiny::validate(need(dim(vis.edges)[1] != 0, 'No Data Available'))
     
     unique_nodes_1 = data.frame(id = unique(vis.edges$from))
     unique_nodes_2 = data.frame(id = unique(vis.edges$to))
@@ -228,6 +225,7 @@ server <- function(input, output, session) {
     #vis.nodes$dep <- sample(c("depends", "imports", "suggests"), nrow(vis.nodes), replace = TRUE)
     
     
+    #defining visualization of the dependency network
     vis.edges$color <-
       c("slategrey", "tomato", "gold")[vis.edges$type]
     vis.edges$width <- 4
